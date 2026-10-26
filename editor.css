@@ -95,3 +95,28 @@
 .feedback-link:hover{background:#eaf0fa;border-color:#c6d5eb}
 .feedback-link:focus-visible{outline:2px solid #6984af;outline-offset:2px}
 @media(max-width:760px){.feedback-link{min-height:36px;padding:6px 8px;font-size:11px}}
+
+.onboarding-dialog{width:460px;max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);overflow:auto;border:1px solid #e1e5ea;border-radius:12px;padding:28px;color:#36414b;background:#fff;box-shadow:0 16px 60px #18233126}
+.onboarding-dialog::backdrop{background:#20293466}
+.onboarding-dialog h2{font-size:23px;line-height:1.4;margin:15px 0 18px;letter-spacing:-.03em}
+.tour-top,.tour-footer{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.tour-kicker{font-size:11px;color:#84909b;letter-spacing:.02em}
+.tour-skip{border:0;background:none;color:#87919a;padding:6px;font-size:12px}
+.tour-description{font-size:13px;line-height:1.9;color:#687580;margin:18px 0 22px}
+.tour-footer{border-top:1px solid #edf0f3;padding-top:18px}
+.tour-footer button{min-height:38px}.tour-footer button:disabled{opacity:.4;cursor:default}
+.tour-illustration{border:1px solid #e4e9ef;border-radius:8px;background:#f8f9fb;padding:18px;min-height:175px;pointer-events:none}
+.tour-example-label{font-size:10px;color:#9aa3ad;margin-bottom:13px}
+.tour-example-title{font-size:16px;font-weight:650;margin-bottom:14px}
+.tour-sample-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;margin:12px 0;color:#8a949d}
+.tour-sample-row strong{font-weight:500;color:#566778}
+.tour-sample-action{display:inline-block;background:#34414c;color:white;border-radius:5px;padding:8px 12px;font-size:12px}
+.tour-sample-tag,.tour-sample-pill{display:inline-block;padding:5px 9px;background:#eaf0fa;color:#415f92;border-radius:5px;font-size:12px}
+.tour-sample-pill{border-radius:16px;background:#fff3ce;color:#8a650b}
+.tour-mini-week{display:grid;grid-template-columns:repeat(7,1fr);gap:0;grid-template-rows:35px 40px 35px;text-align:center;font-size:12px;color:#8d98a1}
+.tour-mini-band{grid-column:1/5;grid-row:2;background:#e4ecfa;color:#536f9e;border-radius:4px;padding:10px 0;text-align:left}
+.tour-mini-deadline{grid-column:6/8;grid-row:3;color:#b97b50;padding-top:10px}
+.tour-backup-sample{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}
+.tour-example-note{font-size:11px;color:#8b96a0;line-height:1.7}
+.tour-backup-link{border:0;background:none;padding:0 0 18px;color:#536f9e;font-size:12px}
+@media(max-width:760px){.onboarding-dialog{margin:auto auto 12px;padding:23px 20px;border-radius:14px;width:calc(100vw - 24px);max-width:none}.onboarding-dialog h2{font-size:21px}.tour-footer button,.tour-skip{min-height:42px}}

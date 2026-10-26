@@ -10,7 +10,7 @@ const files = new Map([
   ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
   ...['calendar.css','editor.css'].map(name=>['/'+name,[name,'text/css; charset=utf-8']]),
   ['/app.js', ['app.js', 'text/javascript; charset=utf-8']],
-  ...['calendar-core.js','editor-controls.js','attachments.js'].map(name=>['/'+name,[name,'text/javascript; charset=utf-8']])
+  ...['calendar-core.js','editor-controls.js','attachments.js','onboarding.js'].map(name=>['/'+name,[name,'text/javascript; charset=utf-8']])
 ]);
 const port = Number(process.env.PORT || 5173);
 

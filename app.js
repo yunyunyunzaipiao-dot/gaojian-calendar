@@ -428,7 +428,6 @@ function bind(){
   $('#importFile').addEventListener('change',event=>importBackup(event.target.files?.[0]));
   $('#backFromDetail').addEventListener('click',()=>setView(previousView));
   $('#deleteOrderBtn').addEventListener('click',()=>deleteOrder(editingId));
-  $('#helpBtn').addEventListener('click',()=>showToast('点击日历日期查看安排；点击色带预览稿件；新建稿件可以随时补充信息。'));
   $$('.list-toolbar .segmented button').forEach(el=>el.addEventListener('click',()=>{orderFilter=el.dataset.statusFilter;$$('.list-toolbar .segmented button').forEach(b=>b.classList.toggle('selected',b===el));renderOrders();}));
   $$('.side-filter').forEach(el=>el.addEventListener('click',()=>{if(el.dataset.filter==='unfinished'){orderFilter='进行中';setView('orders');$$('.list-toolbar .segmented button').forEach(b=>b.classList.toggle('selected',b.dataset.statusFilter===orderFilter));}else{setView('calendar');openUpcoming();}}));
   document.addEventListener('click',event=>{const preview=event.target.closest('[data-preview]');if(preview)openPreview(preview.dataset.preview);const newDate=event.target.closest('[data-new-date]');if(newDate){const date=newDate.dataset.newDate;closeDrawer();openForm(null,date);}});
@@ -436,3 +435,5 @@ function bind(){
   document.addEventListener('keydown',event=>{if(event.key==='Escape'){if($('#previewPropertyPicker')){closePreviewPicker();return;}if(document.querySelector('.image-preview[open]'))return;if(EditorControls.pickerOpen())EditorControls.closePicker();else if(!$('#orderModal').classList.contains('hidden'))closeForm();else if(!$('#previewDrawer').classList.contains('hidden'))closeDrawer();}});
 }
 EditorControls.init($('#orderForm'));Attachments.init($('#orderForm'),showToast);bind();setView('calendar');
+
+Onboarding.init({navigate:setView});
