@@ -90,3 +90,8 @@
 .hours-input input::placeholder{color:#a3aab0}
 .actual-row>strong{min-width:0;overflow-wrap:anywhere}
 @media(max-width:760px){.hours-input input{width:78px;min-height:40px}.hours-total{font-size:14px}}
+
+.feedback-link{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:6px 10px;border:1px solid #dfe4ea;border-radius:6px;background:#fff;color:#536b91;font-size:12px;text-decoration:none;white-space:nowrap}
+.feedback-link:hover{background:#eaf0fa;border-color:#c6d5eb}
+.feedback-link:focus-visible{outline:2px solid #6984af;outline-offset:2px}
+@media(max-width:760px){.feedback-link{min-height:36px;padding:6px 8px;font-size:11px}}

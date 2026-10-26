@@ -45,7 +45,7 @@ npm run dev
 
 ## 版本与维护
 
-当前基线：`v0.1.0`（2026-10-26）。本次任务记录与后续更新约定见 [版本记录](docs/RELEASES.md)。实现约束见 [决策记录](docs/decisions.md)。
+当前版本：`v0.1.1`（2026-10-26）。本次任务记录与后续更新约定见 [版本记录](docs/RELEASES.md)。实现约束见 [决策记录](docs/decisions.md)。
 
 本仓库仅包含应用代码、文档和虚构测试数据。真实稿件、附件和本地备份不要提交；`.local-data/`、`backups/`、`exports/`、环境配置已忽略。分享前应检查 `git diff --cached --stat` 和实际暂存文件。
 

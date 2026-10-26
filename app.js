@@ -318,6 +318,7 @@ function renderDetail(edit=false){
   if(o.actualStart)dates.push(property('实际开工日',longDate(o.actualStart)));
   if(o.actualEnd)dates.push(property('实际完成日',longDate(o.actualEnd)));
   if(recordedHours(o)!==null)dates.push(property('绘画耗时',`${money(recordedHours(o))} 小时`));
+  if(o.contact)dates.push(property('甲方联系方式',o.contact));
   if(o.availability)dates.push(property('甲方在线时间',o.availability));
   $('#detailContent').innerHTML=`<div class="detail-heading"><div><div class="eyebrow">${escapeHtml(o.source||'')}</div><h1>${escapeHtml(o.title)}</h1><div class="detail-meta"><span class="status-pill ${escapeHtml(o.status)}">${escapeHtml(statusLabel(o.status))}</span><span class="detail-tag">${o.paid==='free'?'无偿':`有偿 · ¥${money(o.amount)}`}</span>${typeLabels(o.type).map(type=>`<span class="detail-tag">${escapeHtml(type)}</span>`).join('')}</div></div><div class="detail-actions"><button type="button" class="order-delete" id="detailDeleteOrder">删除稿件</button><button type="button" class="detail-edit" id="detailEditOrder">编辑</button></div></div><div id="detailEditorHost"></div>`;
   $('#detailDeleteOrder').addEventListener('click',()=>deleteOrder(o.id));
@@ -331,7 +332,7 @@ function openForm(id=null,presetDate='',inline=false){
   editingId=id;const o=id?findOrder(id):null;
   $('#modalTitle').textContent=o?'编辑稿件':'新建稿件';$('#deleteOrderBtn').classList.toggle('hidden',!o);
   const form=$('#orderForm');form.reset();
-  const fields=['title','source','type','status','paid','amount','workHours','planStart','planEnd','deadline','actualStart','actualEnd','availability','requirements','references','revisions'];
+  const fields=['title','source','type','status','paid','amount','workHours','planStart','planEnd','deadline','actualStart','actualEnd','contact','availability','requirements','references','revisions'];
   if(o)fields.forEach(name=>{form.elements[name].value=o[name]??'';});
   else if(presetDate)form.elements.planStart.value=presetDate;
   EditorControls.configure(o||{},data.typeTags||['半身','头像','立绘'],data.sourceTags||[]);
@@ -384,7 +385,7 @@ async function importBackup(file){
   try{
     const parsed=JSON.parse(await file.text());
     if(!Array.isArray(parsed.orders)||parsed.orders.length>1000)throw new Error('格式不正确');
-    const fields=['title','source','type','status','paid','paymentDate','planStart','planEnd','deadline','actualStart','actualEnd','availability','requirements','references','revisions'];
+    const fields=['title','source','type','status','paid','paymentDate','planStart','planEnd','deadline','actualStart','actualEnd','contact','availability','requirements','references','revisions'];
     const orders=parsed.orders.map((raw,index)=>{
       if(!raw||typeof raw!=='object'||typeof raw.title!=='string')throw new Error('格式不正确');
       const item={id:`import-${Date.now()}-${index}`,amount:Number(raw.amount)||0,workHours:recordedHours(raw)??''};
