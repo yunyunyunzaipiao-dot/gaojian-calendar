@@ -1,0 +1,25 @@
+.calendar-week{position:relative;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));min-height:132px;border-bottom:1px solid var(--line);isolation:isolate}
+.calendar-week:last-child{border-bottom:0}
+.calendar-day{display:flex;align-items:flex-start;justify-content:flex-start;padding:5px 7px;min-width:0;min-height:0;background:transparent;border:0;border-right:1px solid var(--line);color:#555e65;text-align:left;z-index:0}
+.calendar-day:nth-child(7){border-right:0}
+.calendar-day.outside{background:#fafaf9;color:#a6acb0}
+.calendar-day:hover{background:#f7f8fa}
+.calendar-day.selected{background:#f6f8fb}
+.day-number{display:flex;align-items:center;justify-content:center;flex:none;width:25px;height:25px;font-size:11px;font-weight:650;border-radius:6px}
+.calendar-day.today .day-number{color:#5674a5;box-shadow:inset 0 0 0 1px #b5c5df}
+.calendar-day.selected .day-number{background:#30373e;color:#fff;box-shadow:none}
+.week-band{position:relative;display:flex;align-items:stretch;align-self:center;min-width:0;height:23px;margin:0 3px;padding:0;border:0;border-radius:4px;z-index:1}
+.week-band.blue{color:#526caa;background:var(--blue-bg)}
+.week-band.green{color:#4c8268;background:var(--green-bg)}
+.week-band.violet{color:#756199;background:var(--violet-bg)}
+.week-band:hover{filter:brightness(.96)}
+.week-band.is-dragging{opacity:.55}
+.event-body{display:block;flex:1;min-width:0;padding:0 5px;border:0;border-radius:3px;background:transparent;color:inherit;text-align:left;font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.event-handle{flex:none;display:flex;align-items:center;justify-content:center;width:10px;padding:0;border:0;border-radius:3px;background:transparent;color:inherit;touch-action:none;cursor:ew-resize}
+.event-handle:after{content:'';display:block;width:2px;height:11px;background:currentColor;opacity:.35;border-radius:1px}.event-handle:hover,.event-handle:focus-visible{background:#00000010}.event-handle:hover:after,.event-handle:focus-visible:after{opacity:.85}
+.day-deadlines{display:flex;flex-direction:column;align-items:stretch;min-width:0;padding:3px 6px;gap:3px;z-index:1;pointer-events:none}
+.deadline-chip{display:block;min-width:0;padding:0;border:0;background:none;text-align:left;font-size:10px;line-height:1.5;color:#a36843;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:auto}
+.deadline-chip:before{content:'■';font-size:7px;margin-right:4px;vertical-align:1px;color:#ce9974}
+.calendar-day.drag-target{background:#e8eef8;box-shadow:inset 0 0 0 1px #8da4cf}
+.drag-label{position:fixed;z-index:60;background:#30373e;color:#fff;padding:9px 12px;border-radius:6px;font-size:12px;pointer-events:none;max-width:280px;box-shadow:0 5px 20px #0002}
+@media(max-width:760px){.calendar-week{min-height:104px}.calendar-day{padding:5px 2px}.day-number{font-size:10px;width:23px;height:23px}.week-band{margin:0 2px;height:24px}.event-body{font-size:9px;padding:0 2px}.event-handle{width:14px}.day-deadlines{padding:3px 3px}.deadline-chip{font-size:9px}.deadline-chip:before{font-size:6px;margin-right:2px}}

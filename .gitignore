@@ -1,0 +1,15 @@
+node_modules/
+.DS_Store
+sites/
+.local-data/
+
+# Private data and credentials
+.env
+.env.*
+!.env.example
+backups/
+exports/
+*备份*.json
+*.log
+*.pem
+*.key

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f8f8f7">
+  <meta name="description" content="画稿日历：在整月视图中规划绘画工期与截稿日。">
+  <title>画稿日历</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./calendar.css">
+  <link rel="stylesheet" href="./editor.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="主导航">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">✳</span><span>画稿日历</span></div>
+      <div class="workspace-label">我的工作台 <span class="workspace-chevron">⌄</span></div>
+      <nav class="nav-list">
+        <button class="nav-item active" data-view="calendar"><span class="nav-icon">▦</span> 月历</button>
+        <button class="nav-item" data-view="orders"><span class="nav-icon">☷</span> 所有稿件</button>
+        <button class="nav-item" data-view="stats"><span class="nav-icon">▥</span> 月度统计</button>
+      </nav>
+      <div class="sidebar-section-title">快速查看</div>
+      <button class="side-filter" data-filter="unfinished"><span class="side-dot blue"></span> 进行中的稿件 <span id="activeCount" class="side-count">0</span></button>
+      <button class="side-filter" data-filter="deadline"><span class="side-dot orange"></span> 近期截稿 <span id="deadlineCount" class="side-count">0</span></button>
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-note"><span class="note-icon">✦</span><div>先把时间放进日历。<br><span>细节可以随时补充。</span></div></div>
+      <div class="sidebar-bottom">设计原型 · 数据保存在当前浏览器</div>
+    </aside>
+
+    <main class="main-content" id="mainContent">
+      <header class="topbar">
+        <div class="mobile-brand"><span class="brand-mark" aria-hidden="true">✳</span> 画稿日历</div>
+        <div class="breadcrumb"><span>我的工作台</span><span class="slash">/</span><strong id="breadcrumbCurrent">月历</strong></div>
+        <div class="top-actions"><span class="save-hint" id="saveHint">已自动保存在本机</span><button class="icon-button" id="helpBtn" title="使用说明" aria-label="使用说明">?</button></div>
+      </header>
+
+      <section class="page-view" id="calendarView">
+        <div class="page-heading">
+          <div><div class="eyebrow">排期概览</div><h1>月历</h1><p>让预计工期和截稿日，待在同一张日历里。</p></div>
+          <button class="primary-button new-order-button" data-action="new"><span>＋</span> 新建稿件</button>
+        </div>
+        <div class="demo-banner" id="demoBanner"><span>✦</span><span>当前展示的是示例稿件，方便预览布局。</span><button id="clearDemoBtn">清空示例，开始录单 →</button></div>
+        <div class="calendar-panel">
+          <div class="calendar-toolbar">
+            <div class="month-picker"><button class="icon-button" id="prevMonth" aria-label="上个月">‹</button><h2 id="monthTitle"></h2><button class="icon-button" id="nextMonth" aria-label="下个月">›</button><button class="today-button" id="todayBtn">今天</button></div>
+            <div class="legend"><span><i class="legend-band"></i>预计工期</span><span><i class="legend-deadline"></i>截稿日</span></div>
+          </div>
+          <div class="weekday-row"><span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span><span>周日</span></div>
+          <div class="calendar-grid" id="calendarGrid" aria-label="月历"></div>
+        </div>
+        <div class="calendar-footer"><div><span class="footer-icon">↗</span><strong id="monthSummary">本月排期</strong><span id="monthSummaryText"></span></div><button class="text-button" data-action="new">＋ 录入新稿件</button></div>
+      </section>
+
+      <section class="page-view hidden" id="ordersView">
+        <div class="page-heading"><div><div class="eyebrow">稿件资料库</div><h1>所有稿件</h1><p>需求、参考资料和修改意见，都放在稿件里。</p></div><button class="primary-button" data-action="new"><span>＋</span> 新建稿件</button></div>
+        <div class="list-toolbar"><div class="segmented"><button class="selected" data-status-filter="all">全部</button><button data-status-filter="未开始">未开始</button><button data-status-filter="进行中">进行中</button><button data-status-filter="已完成">已完成</button></div><span id="orderCountLabel"></span></div>
+        <div class="data-actions"><span>本机数据</span><div><button id="exportBtn">导出备份</button><button id="importBtn">导入备份</button><input class="hidden" type="file" id="importFile" accept="application/json,.json"></div></div>
+        <div class="orders-list" id="ordersList"></div>
+      </section>
+
+      <section class="page-view hidden" id="statsView">
+        <div class="page-heading"><div><div class="eyebrow">每月回顾</div><h1>月度统计</h1><p>收入按实际完成日期归入月份，仅统计已完成的有偿稿件。</p></div></div>
+        <div class="stats-month-toolbar"><button class="icon-button" id="statsPrev" aria-label="上个月">‹</button><h2 id="statsMonthTitle"></h2><button class="icon-button" id="statsNext" aria-label="下个月">›</button></div>
+        <div class="stats-overview"><div class="stats-primary"><div class="stat-label">本月实收</div><div class="stat-number"><span>¥</span><strong id="incomeValue">0</strong></div><div class="stat-caption" id="incomeCaption"></div></div><div class="stats-secondary"><div><span>本月截稿</span><strong id="dueValue">0</strong></div><div><span>本月完成</span><strong id="completedValue">0</strong></div><div><span>正在进行</span><strong id="inProgressValue">0</strong></div></div></div>
+        <div class="stats-columns"><section class="stats-section"><div class="chart-heading"><h3>订单来源</h3><div class="segmented chart-metric" role="group" aria-label="订单来源统计方式"><button type="button" class="selected" data-chart="source" data-metric="count" aria-pressed="true">数量</button><button type="button" data-chart="source" data-metric="amount" aria-pressed="false">金额</button></div></div><p id="sourceChartCaption">这个月截稿的稿件来自哪里</p><div id="sourceChart"></div></section><section class="stats-section"><div class="chart-heading"><h3>稿件类型</h3><div class="segmented chart-metric" role="group" aria-label="稿件类型统计方式"><button type="button" class="selected" data-chart="type" data-metric="count" aria-pressed="true">数量</button><button type="button" data-chart="type" data-metric="amount" aria-pressed="false">金额</button></div></div><p id="typeChartCaption">这个月主要在画什么</p><div id="typeChart"></div></section></div>
+        <section class="stats-section actual-section"><div class="chart-heading"><h3>这个月画了多久</h3><strong class="hours-total" id="workHoursTotal" aria-live="polite">累计 0 小时</strong></div><p id="workHoursCaption">手动填写绘画耗时，按实际完成月份汇总。</p><div id="actualList"></div></section>
+      </section>
+
+      <section class="page-view hidden" id="detailView"><button class="back-link" id="backFromDetail">← 返回</button><div id="detailContent"></div></section>
+    </main>
+  </div>
+
+  <div class="mobile-tabbar" aria-label="移动端导航"><button class="active" data-view="calendar"><span>▦</span>月历</button><button data-view="orders"><span>☷</span>稿件</button><button data-view="stats"><span>▥</span>统计</button><button data-action="new"><span>＋</span>新建</button></div>
+
+  <div class="scrim hidden" id="drawerScrim"></div>
+  <aside class="drawer hidden" id="previewDrawer" aria-label="稿件预览" aria-modal="true" role="dialog">
+    <div class="drawer-handle"></div><div class="drawer-header"><span>稿件预览</span><button class="icon-button" id="closeDrawer" aria-label="关闭预览">×</button></div><div id="drawerContent"></div>
+  </aside>
+
+  <div class="scrim hidden" id="modalScrim"></div>
+  <div class="modal-wrap hidden" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><div class="modal-header"><div><div class="eyebrow">稿件资料</div><h2 id="modalTitle">新建稿件</h2></div><button class="icon-button" id="closeModal" aria-label="关闭">×</button></div><form id="orderForm"><div class="modal-body">
+    <div class="form-intro">先填名称和日期，其余信息可以之后补。</div>
+    <div class="form-grid"><label class="form-field full"><span>稿件名称 <em>*</em></span><input name="title" required maxlength="80" placeholder="例如：角色半身像"></label><label class="form-field"><span>来源</span><select name="source"><option>画加</option><option>QQ</option><option>其他</option></select></label><label class="form-field"><span>稿件类型</span><input name="type" maxlength="30" placeholder="例如：半身、头像、立绘"></label><label class="form-field"><span>进度</span><select name="status"><option>未开始</option><option value="进行中">进行中</option><option>已完成</option></select></label><label class="form-field"><span>报酬</span><select name="paid"><option value="paid">有偿</option><option value="free">无偿</option></select></label><label class="form-field"><span>金额（元）</span><input type="number" min="0" step="0.01" name="amount" placeholder="0"></label></div>
+    <div class="form-section-title">时间规划</div><div class="form-grid"><label class="form-field"><span>预计开工日</span><input type="date" name="planStart"></label><label class="form-field"><span>预计完成日</span><input type="date" name="planEnd"></label><label class="form-field"><span>截稿日</span><input type="date" name="deadline"></label><label class="form-field"><span>实际开工日</span><input type="date" name="actualStart"></label><label class="form-field"><span>实际完成日</span><input type="date" name="actualEnd"></label><label class="form-field"><span>绘画耗时（小时）</span><input type="number" name="workHours" min="0" step="0.01" placeholder="未记录，例如 2.5"></label></div><div class="form-warning hidden" id="dateWarning">预计完成日晚于截稿日，请确认仍能按时交稿。</div>
+    <div class="form-section-title">参考资料与沟通</div><div class="form-grid"><label class="form-field full"><span>甲方在线时间</span><input name="availability" maxlength="120" placeholder="例如：工作日 20:00 后"></label><label class="form-field full"><span>设定文字与甲方要求</span><textarea name="requirements" rows="4" placeholder="记录角色设定、画面要求等"></textarea></label><label class="form-field full"><span>参考资料链接或文件说明</span><textarea name="references" rows="3" placeholder="可粘贴图片链接，或先记下聊天中的文件位置"></textarea></label><label class="form-field full"><span>修改记录</span><textarea name="revisions" rows="3" placeholder="每条意见可另起一行"></textarea></label></div>
+  </div><div class="modal-footer"><button type="button" class="danger-text hidden" id="deleteOrderBtn">删除稿件</button><div class="footer-actions"><button type="button" class="secondary-button" id="cancelModal">取消</button><button type="submit" class="primary-button">保存稿件</button></div></div></form></div></div>
+  <div class="toast hidden" id="toast" role="status"></div>
+  <script src="./calendar-core.js"></script>
+  <script src="./editor-controls.js"></script>
+  <script src="./attachments.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
