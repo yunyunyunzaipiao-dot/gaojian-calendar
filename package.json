@@ -1,6 +1,6 @@
 {
-  "name": "huagao-calendar",
-  "version": "0.1.1",
+  "name": "gaojian-calendar",
+  "version": "0.1.2",
   "private": true,
   "type": "module",
   "scripts": {

@@ -1,4 +1,4 @@
-/* 画稿日历：本地交互原型。示例数据与真实订单严格区分。 */
+/* 稿件日历：本地交互原型。示例数据与真实订单严格区分。 */
 const KEY = 'huagao-calendar-v1';
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -375,7 +375,7 @@ async function exportBackup(){
   let files;try{files=await Attachments.exportFiles(data.orders);}catch(error){showToast(error.message||'附件备份失败，请重试。');return;}
   const blob=new Blob([JSON.stringify({version:2,orders:data.orders,typeTags:data.typeTags,sourceTags:data.sourceTags,files},null,2)],{type:'application/json'});
   const link=document.createElement('a'),url=URL.createObjectURL(blob);
-  link.href=url;link.download=`画稿日历备份-${ymd(new Date())}.json`;document.body.append(link);link.click();link.remove();
+  link.href=url;link.download=`稿件日历备份-${ymd(new Date())}.json`;document.body.append(link);link.click();link.remove();
   setTimeout(()=>URL.revokeObjectURL(url),1000);
   showToast('备份文件已导出');
 }
@@ -400,7 +400,7 @@ async function importBackup(file){
     if(!confirm(`导入将替换本机现有的 ${data.orders.length} 个稿件。确定导入 ${orders.length} 个稿件吗？`))return;
     await Attachments.restoreFiles(orders,parsed.files||[]);
     const previous=data;data={orders,demo:false,sourceTags:[...new Set(['画加','QQ',...(Array.isArray(parsed.sourceTags)?parsed.sourceTags.filter(x=>typeof x==='string'):[]),...orders.map(o=>o.source)].filter(Boolean))],typeTags:[...new Set([...(Array.isArray(parsed.typeTags)?parsed.typeTags.filter(x=>typeof x==='string'):[]),...orders.map(o=>o.type).filter(Boolean)])]};if(!persist()){data=previous;return;}setView('orders');showToast(`已导入 ${orders.length} 个稿件`);
-  }catch(error){showToast('无法导入：请选择画稿日历导出的 JSON 备份。');}
+  }catch(error){showToast('无法导入：请选择稿件日历导出的 JSON 备份。');}
   finally{$('#importFile').value='';}
 }
 function bind(){
